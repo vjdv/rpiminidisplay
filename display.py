@@ -1,4 +1,4 @@
-#!/user/bin/env python
+#!/user/bin/env python3
 
 import threading
 from datetime import datetime
@@ -46,11 +46,11 @@ def updateSystemStats():
   showSystemStats()
 
 def showSystemStats():
-  print "CPU: " + used_cpu
-  print "RAM: " + used_memory
-  print "Hora: " + current_time
-  print "eth0: " + eth0_ip
-  print "wlan0: " + wlan0_ip
+  print("CPU: " + used_cpu)
+  print("RAM: " + used_memory)
+  print("Hora: " + current_time)
+  print("eth0: " + eth0_ip)
+  print("wlan0: " + wlan0_ip)
 
 #exec
 updateIps()
