@@ -4,7 +4,11 @@ import threading
 from datetime import datetime
 import psutil
 import netifaces as ni
+from luma.core.interface.serial import i2c
+from luma.core.render import canvas
+from luma.oled.device import ssd1306
 
+#Interval helper
 def setInterval(func, time):
   def runner():
     e = threading.Event()
@@ -13,6 +17,10 @@ def setInterval(func, time):
   t = threading.Thread(target=runner)
   t.start()
   return t
+
+#serial
+serial = i2c(port=1, address=0x3C)
+device = ssd1306(serial)
 
 #System network
 eth0_ip = "9.9.9.9"
@@ -51,6 +59,13 @@ def showSystemStats():
   print("Hora: " + current_time)
   print("eth0: " + eth0_ip)
   print("wlan0: " + wlan0_ip)
+  with canvas(device) as draw:
+    draw.rectangle(device.bounding_box, outline="white", fill="black")
+    draw.text((3, 5), "Hora: " + current_time, fill="white")
+    draw.text((3, 15), "CPU: " + used_cpu, fill="white")
+    draw.text((3, 25), "RAM: " + used_memory, fill="white")
+    draw.text((3, 35), "eth0: " + eth0_ip, fill="white")
+    draw.text((3, 45), "wlan0: " + wlan0_ip, fill="white")
 
 #exec
 updateIps()
