@@ -1,6 +1,7 @@
 #!/user/bin/env python3
 
 import threading
+import math
 from datetime import datetime
 import psutil
 import netifaces as ni
@@ -42,19 +43,32 @@ def updateIps():
 
 #System stats
 used_cpu = "0.0%"
+cpu_temp = "--"
 used_memory = "0.0%"
 current_time = "00:00"
 def updateSystemStats():
   global used_cpu
+  global cpu_temp
   global used_memory
   global current_time
   used_cpu = str(psutil.cpu_percent()) + "%"
+  temps = psutil.sensors_temperatures()
+  if not temps:
+    cpu_temp = "0 °C"
+  else:
+    for name, entries in temps.items():
+        print(name)
+        for entry in entries:
+          cpu_temp = str(math.trunc(entry.current)) + " °C"
+          break
+        break
   used_memory = str(psutil.virtual_memory().percent) + "%"
   current_time = datetime.now().strftime("%H:%S")
   showSystemStats()
 
 def showSystemStats():
   print("CPU: " + used_cpu)
+  print("CPU Temp: " + cpu_temp)
   print("RAM: " + used_memory)
   print("Hora: " + current_time)
   print("eth0: " + eth0_ip)
