@@ -65,7 +65,27 @@ def updateSystemStats():
         break
   used_memory = str(psutil.virtual_memory().percent) + "%"
   current_time = datetime.now().strftime("%H:%S")
-  showSystemStats()
+  #showSystemStats()
+
+def showClock():
+  with canvas(device) as draw:
+    draw.text((0,0), current_time, fill="white", fontSize=15)
+
+def showCpuStats():
+  with canvas(device) as draw:
+    draw.text((0,0), "CPU:", fill="white")
+    draw.text((5,10), used_cpu, fill="white")
+    draw.text((0,22), "RAM:", fill="white")
+    draw.text((5,32), used_memory, fill="white")
+    draw.text((0,44), "Temp:", fill="white")
+    draw.text((5,54), cpu_temp, fill="white")
+
+def showNetStats():
+  with canvas(device) as draw:
+    draw.text((0,10), "eth0:", fill="white")
+    draw.text((0,20), eth0_ip, fill="white")
+    draw.text((0,40), "wlan0:", fill="white")
+    draw.text((0,50), wlan0_ip, fill="white")
 
 def showSystemStats():
   print("CPU: " + used_cpu)
@@ -86,5 +106,6 @@ def showSystemStats():
 updateIps()
 
 #Intervals
+setInterval(updateIps, 30)
 setInterval(updateSystemStats, 5)
-setInterval(showSystemStats, 1)
+setInterval(showClock, 1)
