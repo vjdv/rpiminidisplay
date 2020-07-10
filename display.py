@@ -4,6 +4,7 @@
 import os
 import threading
 import math
+import time
 from datetime import datetime
 import psutil
 import netifaces as ni
@@ -11,6 +12,9 @@ from PIL import ImageFont
 from luma.core.interface.serial import i2c
 from luma.core.render import canvas
 from luma.oled.device import ssd1306
+from utils.common import bytes2human
+from utils.network import interfaceStats, showWlan, showEth
+from utils.opts import get_device
 
 #Interval helper
 def setInterval(func, time):
@@ -113,7 +117,17 @@ def showSystemStats():
 #exec
 updateIps()
 
-#Intervals
-setInterval(updateIps, 30)
-setInterval(updateSystemStats, 5)
-setInterval(showClock, 1)
+def main():
+  width = device.width
+  height = device.height
+  while True:
+    with canvas(device) as draw:
+      showWlan(draw, width, height)
+    time.sleep(5)
+
+try:
+  device = get_device()
+  main()
+except KeyboardInterrupt:
+  pass
+
