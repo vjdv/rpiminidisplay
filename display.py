@@ -1,11 +1,13 @@
 #!/user/bin/env python3
 # -*- coding: utf-8 -*-
 
+import os
 import threading
 import math
 from datetime import datetime
 import psutil
 import netifaces as ni
+from PIL import ImageFont
 from luma.core.interface.serial import i2c
 from luma.core.render import canvas
 from luma.oled.device import ssd1306
@@ -19,6 +21,11 @@ def setInterval(func, time):
   t = threading.Thread(target=runner)
   t.start()
   return t
+
+#Font helper
+def make_font(name, size):
+  font_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "fonts", name))
+  return ImageFont.truetype(font_path, size)
 
 #serial
 serial = i2c(port=1, address=0x3C)
@@ -64,12 +71,13 @@ def updateSystemStats():
           break
         break
   used_memory = str(psutil.virtual_memory().percent) + "%"
-  current_time = datetime.now().strftime("%H:%S")
+  current_time = datetime.now().strftime("%I:%M%p")
   #showSystemStats()
 
+clockFont = make_font("FreePixel.ttf", 30)
 def showClock():
   with canvas(device) as draw:
-    draw.text((0,0), current_time, fill="white", fontSize=15)
+    draw.text((10,20), current_time, fill="white", font=clockFont)
 
 def showCpuStats():
   with canvas(device) as draw:
