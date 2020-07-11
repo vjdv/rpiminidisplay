@@ -14,7 +14,6 @@ def showStats(interface, draw, width, height):
     margin = 2
     data = interfaceStats(interface)
     title_text(draw, margin, width, text=data[0])
-    print(data)
     draw.text((margin, 20), text=interface, fill="white")
     draw.text((margin, 35), text="Rx: " + data[1], font=tiny_font, fill="white")
     draw.text((margin, 47), text="Tx: " + data[2], font=tiny_font, fill="white")
