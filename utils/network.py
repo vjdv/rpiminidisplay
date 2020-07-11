@@ -23,6 +23,15 @@ def showStats(interface, draw, width, height):
       draw.pieslice((80,25,125,70), 225, 315, outline="white", fill="white", width=3)
       draw.arc((95,40,110,55), 225, 315, fill="black", width=4)
       draw.arc((85,30,120,65), 225, 315, fill="black", width=5)
+    #dibuja icono eth
+    if interface.startswith("eth"):
+      draw.rectangle((98, 20, 106, 28), fill="black", outline="white", width=2)
+      draw.line((102, 29, 102, 34), fill="white", width=2)
+      draw.line((85, 35, 120, 35), fill="white", width=2)
+      draw.rectangle((90, 42, 98, 50), fill="black", outline="white", width=2)
+      draw.line((94, 36, 94, 41), fill="white", width=2)
+      draw.rectangle((107, 42, 115, 50), fill="black", outline="white", width=2)
+      draw.line((110, 36, 110, 41), fill="white", width=2)
 
 def showWlan(draw, width, height):
     showStats("wlan0", draw, width, height)
