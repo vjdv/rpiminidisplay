@@ -120,10 +120,20 @@ updateIps()
 def main():
   width = device.width
   height = device.height
+  counter = 1
+  duration = 5
+  size = 2
   while True:
+    step = counter / duration
     with canvas(device) as draw:
-      showWlan(draw, width, height)
-    time.sleep(5)
+      if step <= 1:
+        showEth(draw, width, height)
+      elif step <= 2:
+        showWlan(draw, width, height)
+    counter = counter + 1
+    if counter > (duration * size):
+      counter = 1
+    time.sleep(1)
 
 try:
   device = get_device()
