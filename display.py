@@ -14,7 +14,7 @@ def main():
   height = device.height
   counter = 1
   duration = 5
-  size = 3
+  size = 5
   while True:
     step = counter / duration
     with canvas(device) as draw:
@@ -24,6 +24,8 @@ def main():
         showEth(draw, width, height)
       elif step <= 3:
         showWlan(draw, width, height)
+      elif step <= 5:
+        showCpuStats(draw, width, height)
     counter = counter + 1
     if counter > (duration * size):
       counter = 1
