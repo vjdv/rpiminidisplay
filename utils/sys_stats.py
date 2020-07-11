@@ -28,7 +28,7 @@ class Updater(threading.Thread):
             #temperature
             try:
                 with open("/sys/class/thermal/thermal_zone0/temp", "r") as temp:
-                    self.cpu_temperature = str(int(temp.read()[:2])) + "°C"
+                    self.cpu_temperature = int(temp.read()[:2])
             except:
                 self.cpu_temperature = "0°C"
             #wait
@@ -54,5 +54,9 @@ def showCpuStats(draw, width, height):
     #draw ram
     draw.text((0,0), "RAM " + data.used_ram, fill="white", font=tiny_font)
     #draw temp
-    tempwidth = draw.textsize(data.cpu_temperature)[0]
-    draw.text((width - tempwidth - 1, 0), data.cpu_temperature, fill="white")
+    temp = data.cpu_temperature
+    temptext = str(temp) + "°C"
+    tempwidth = draw.textsize(temptext)[0]
+    if temp >= 55:
+        draw.rectangle((width-tempwidth-3, 0, width-1, 12), fill="white", outline="white")
+    draw.text((width - tempwidth - 1, 0), temptext, fill="white" if temp < 55 else "black")
