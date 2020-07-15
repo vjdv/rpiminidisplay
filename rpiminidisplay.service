@@ -1,0 +1,10 @@
+[Unit]
+Description=Shows Pi status on mini oled display
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python3 /location/to/display.py
+
+[Install]
+WantedBy=multi-user.target

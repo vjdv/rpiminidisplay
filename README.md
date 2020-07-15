@@ -30,3 +30,14 @@ cd rpiminidisplay
 #execute
 python3 display.py
 ```
+
+## Run on startup
+
+Edit `rpiminidisplay.service` and update the current location to display.py, then copy the file to `/lib/systemd/system/` and enable the service:
+
+```
+sudo cp rpiminidisplay.service /lib/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable rpiminidisplay.service
+sudo systemctl start rpiminidisplay.service
+```
